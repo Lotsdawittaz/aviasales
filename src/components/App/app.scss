@@ -1,0 +1,38 @@
+.layout {
+    max-width: 960px;
+    margin: auto;
+    justify-content: center;
+    background-color: rgba(243, 247, 250, 1);
+    min-height: 100vh;
+    padding-top: 50px;
+}
+ body {
+    font-family: 'Inter', sans-serif;
+}
+.posterImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
+}
+.app__container {
+    display: flex;
+    flex-direction: row;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+/* .app_filter {
+    padding: 10px;
+    font-size: 12px;
+} */
+
+.app__ticket__block {
+    margin-left: 20px;
+    width: 504px;
+}
+/* .app__ticket__filter{
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+} */

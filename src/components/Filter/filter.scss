@@ -1,0 +1,47 @@
+.app__filter-box{
+    background-color: #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+.app__filter__checkboxContainer {
+    height: 40px;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
+}
+.app__filter__checkboxContainer:hover {
+    background-color: #F1FCFF;
+}
+label>input {
+    vertical-align: middle;
+    position: absolute;
+    appearance: none;
+}
+label {
+    display:flex;
+    font-size: 13px;
+}
+.app__filter__checkboxContainer>label {
+    vertical-align: middle;
+}
+.app__filter__checkbox-custom {
+    width: 20px;
+    height: 20px;
+    margin: 10px;
+    background-image: url('../../Assets/checkbox-unchecked.svg');
+}
+input:checked + .app__filter__checkbox-custom {
+    background-image: url('../../Assets/checkbox-checked.svg');
+
+}
+.title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    padding: 20px 20px 10px 20px;
+    user-select: none;
+}
