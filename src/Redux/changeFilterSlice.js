@@ -12,9 +12,6 @@ export const changeFilterSlice = createSlice({
       state.value.oneChange = state.value.all;
       state.value.twoChange = state.value.all;
       state.value.threeChange = state.value.all;
-
-      console.log(state.value.all);
-      console.log(state.value);
     },
     noChange: (state) => {
       state.value.noChange = !state.value.noChange;
