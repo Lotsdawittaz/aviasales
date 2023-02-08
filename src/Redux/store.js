@@ -4,6 +4,7 @@ import counterReducer from './counterSlice';
 import filterToggleReducer from './filterToggleSlice';
 import changeFilterReducer from './changeFilterSlice';
 import fetchSearchIdReducer, { fetchTicketsSlice } from './dataHandler';
+import testObjRducer from './testObjSlice';
 
 export default configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export default configureStore({
     changeFilter: changeFilterReducer,
     getSearchId: fetchSearchIdReducer,
     getTickets: fetchTicketsSlice.reducer,
+    testObj: testObjRducer,
   },
 });

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const baseUrl = 'https://aviasales-test-api.kata.academy/search';
-const a = 'https://aviasales-test-api.kata.academy/tickets?searchId=';
+const searchUrl = 'https://aviasales-test-api.kata.academy/tickets?searchId=';
 
 // prettier-ignore
 
@@ -14,10 +14,22 @@ export const fetchSearchId = createAsyncThunk('getSearchId', async () => {
 // prettier-ignore
 export const fetchTickets = createAsyncThunk(
     'getTickets',
-    async(_, {getState}) => {
-        const response = await fetch(`${a}${getState().getSearchId.searchId}`).then((res) => res.json())
-        console.log(response)
-        return response
+    async(_, {getState, rejectWithValue, dispatch}) => {
+        try{
+        const response = await fetch(`${searchUrl}${getState().getSearchId.searchId}`)
+        if(!response.ok) {
+            dispatch(fetchTickets())
+            throw new Error('Server Error, trying new fetch') 
+        }
+
+
+        const data = await response.json()
+        console.log(data)
+        // if(!data.stop){dispatch(fetchTickets())}     ==============    continious loading untill no data to load
+        return data
+    }catch(error){
+        return rejectWithValue(error.message)
+    }
     }
 )
 // prettier-ignore
@@ -37,8 +49,10 @@ export const fetchTicketsSlice = createSlice(({
             state.tickets = action.payload.tickets
             state.stop = action.payload.stop
         },
-        [fetchTickets.rejected]: (state) => {
+        [fetchTickets.rejected]: (state, action) => {
             state.loading = false
+            console.log(action.payload)
+            //return dispatch(fetchTickets())
         }
     }
 }))

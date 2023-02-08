@@ -1,17 +1,23 @@
 import './filter.scss';
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
+// import { filterTickets } from '../../Redux/testObjSlice';
 import { all, noChange, oneChange, twoChange, threeChange } from '../../Redux/changeFilterSlice';
 
 const Filter = () => {
-  const dispatch = useDispatch();
-  const isAll = useSelector((state) => state.changeFilter.value.all);
-  const isNoChange = useSelector((state) => state.changeFilter.value.noChange);
-  const isOneChange = useSelector((state) => state.changeFilter.value.oneChange);
-  const isTwoChange = useSelector((state) => state.changeFilter.value.twoChange);
-  const isThreeChange = useSelector((state) => state.changeFilter.value.threeChange);
+  const isAll = useSelector((state) => state.changeFilter.all);
+  const isNoChange = useSelector((state) => state.changeFilter.noChange);
+  const isOneChange = useSelector((state) => state.changeFilter.oneChange);
+  const isTwoChange = useSelector((state) => state.changeFilter.twoChange);
+  const isThreeChange = useSelector((state) => state.changeFilter.threeChange);
 
-  console.log(useSelector((state) => state.changeFilter.value));
+  useEffect(() => {
+    console.log('filter effect');
+  }, []);
+
+  const dispatch = useDispatch();
+
   return (
     <div className="app__filter">
       <div className="app__filter-box">
@@ -19,7 +25,15 @@ const Filter = () => {
         <form>
           <div className="app__filter__checkboxContainer">
             <label htmlFor="all">
-              <input onChange={() => dispatch(all())} type="checkbox" id="all" name="all" checked={isAll}></input>
+              <input
+                onClick={() => {
+                  dispatch(all());
+                }}
+                type="checkbox"
+                id="all"
+                name="all"
+                checked={isAll}
+              ></input>
               <span className="app__filter__checkbox-custom"></span>
               Все
             </label>
@@ -27,7 +41,9 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="no-change">
               <input
-                onChange={() => dispatch(noChange())}
+                onClick={() => {
+                  dispatch(noChange());
+                }}
                 type="checkbox"
                 id="no-change"
                 name="no-change"
@@ -40,7 +56,9 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="one-change">
               <input
-                onChange={() => dispatch(oneChange())}
+                onClick={() => {
+                  dispatch(oneChange());
+                }}
                 type="checkbox"
                 id="one-change"
                 name="one-change"
@@ -52,7 +70,9 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="two-change">
               <input
-                onChange={() => dispatch(twoChange())}
+                onClick={() => {
+                  dispatch(twoChange());
+                }}
                 type="checkbox"
                 id="two-change"
                 name="two-change"
@@ -64,7 +84,9 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="three-change">
               <input
-                onChange={() => dispatch(threeChange())}
+                onClick={() => {
+                  dispatch(threeChange());
+                }}
                 type="checkbox"
                 id="three-change"
                 name="three-change"

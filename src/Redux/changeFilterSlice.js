@@ -3,50 +3,55 @@ import { createSlice } from '@reduxjs/toolkit';
 export const changeFilterSlice = createSlice({
   name: 'changeFilter',
   initialState: {
-    value: { all: true, noChange: true, oneChange: true, twoChange: true, threeChange: true },
+    all: true,
+    noChange: true,
+    oneChange: true,
+    twoChange: true,
+    threeChange: true,
   },
   reducers: {
     all: (state) => {
-      state.value.all = !state.value.all;
-      state.value.noChange = state.value.all;
-      state.value.oneChange = state.value.all;
-      state.value.twoChange = state.value.all;
-      state.value.threeChange = state.value.all;
+      state.all = !state.all;
+      state.noChange = state.all;
+      state.oneChange = state.all;
+      state.twoChange = state.all;
+      state.threeChange = state.all;
     },
     noChange: (state) => {
-      state.value.noChange = !state.value.noChange;
-      if (!state.value.noChange) {
-        state.value.all = false;
+      console.log(state.noChange);
+      state.noChange = !state.noChange;
+      if (!state.noChange) {
+        state.all = false;
       }
-      if (state.value.noChange && state.value.oneChange && state.value.twoChange && state.value.threeChange) {
-        state.value.all = true;
+      if (state.noChange && state.oneChange && state.twoChange && state.threeChange) {
+        state.all = true;
       }
     },
     oneChange: (state) => {
-      state.value.oneChange = !state.value.oneChange;
-      if (!state.value.oneChange) {
-        state.value.all = false;
+      state.oneChange = !state.oneChange;
+      if (!state.oneChange) {
+        state.all = false;
       }
-      if (state.value.noChange && state.value.oneChange && state.value.twoChange && state.value.threeChange) {
-        state.value.all = true;
+      if (state.noChange && state.oneChange && state.twoChange && state.threeChange) {
+        state.all = true;
       }
     },
     twoChange: (state) => {
-      state.value.twoChange = !state.value.twoChange;
-      if (!state.value.twoChange) {
-        state.value.all = false;
+      state.twoChange = !state.twoChange;
+      if (!state.twoChange) {
+        state.all = false;
       }
-      if (state.value.noChange && state.value.oneChange && state.value.twoChange && state.value.threeChange) {
-        state.value.all = true;
+      if (state.noChange && state.oneChange && state.twoChange && state.threeChange) {
+        state.all = true;
       }
     },
     threeChange: (state) => {
-      state.value.threeChange = !state.value.threeChange;
-      if (!state.value.threeChange) {
-        state.value.all = false;
+      state.threeChange = !state.threeChange;
+      if (!state.threeChange) {
+        state.all = false;
       }
-      if (state.value.noChange && state.value.oneChange && state.value.twoChange && state.value.threeChange) {
-        state.value.all = true;
+      if (state.noChange && state.oneChange && state.twoChange && state.threeChange) {
+        state.all = true;
       }
     },
   },

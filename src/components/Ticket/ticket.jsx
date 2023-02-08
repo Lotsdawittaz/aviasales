@@ -3,9 +3,108 @@ import { useSelector } from 'react-redux';
 import { addMinutes, format } from 'date-fns';
 
 const Ticket = () => {
-  const { tickets } = useSelector((state) => state.getTickets);
+  const { tickets } = useSelector((state) => state.testObj); //======   live data
+  const isAll = useSelector((state) => state.changeFilter.all);
+  const isNoChange = useSelector((state) => state.changeFilter.noChange);
+  const isOneChange = useSelector((state) => state.changeFilter.oneChange);
+  const isTwoChange = useSelector((state) => state.changeFilter.twoChange);
+  const isThreeChange = useSelector((state) => state.changeFilter.threeChange);
+  const filterToggle = useSelector((state) => state.filterToggle.value);
+  console.log({ filterToggle });
+
+  let filterTicketsF = (oldTickets) => {
+    let arrCopy = [...oldTickets];
+    let newArr = arrCopy;
+    console.log({ isAll, isNoChange, isOneChange });
+    if (isAll) {
+      console.log('all');
+      return newArr;
+    }
+    if (!isAll && !isNoChange && !isOneChange && !isTwoChange && !isThreeChange) {
+      console.log('nothing');
+      return [];
+    }
+    if (isNoChange && !isOneChange && !isTwoChange && !isThreeChange) {
+      console.log('no change');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 0);
+    }
+    if (!isNoChange && isOneChange && !isTwoChange && !isThreeChange) {
+      console.log('only 1');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 1);
+    }
+    if (!isNoChange && !isOneChange && isTwoChange && !isThreeChange) {
+      console.log('only 2');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 2);
+    }
+    if (!isNoChange && !isOneChange && !isTwoChange && isThreeChange) {
+      console.log('only 3');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 3);
+    }
+    if (isNoChange && isOneChange && !isTwoChange && !isThreeChange) {
+      console.log('0 and 1');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 1);
+    }
+    if (isNoChange && !isOneChange && isTwoChange && !isThreeChange) {
+      console.log('0 and 2');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 2);
+    }
+    if (isNoChange && !isOneChange && !isTwoChange && isThreeChange) {
+      console.log('0 and 3');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 3);
+    }
+    if (isNoChange && isOneChange && isTwoChange && !isThreeChange) {
+      console.log('0 and 1 and 2');
+      return arrCopy.filter(
+        (e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 1 || e.segments[0].stops.length == 2
+      );
+    }
+    if (isNoChange && isOneChange && !isTwoChange && isThreeChange) {
+      console.log('0 and 1 and 3');
+      return arrCopy.filter(
+        (e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 1 || e.segments[0].stops.length == 3
+      );
+    }
+    if (isNoChange && !isOneChange && isTwoChange && isThreeChange) {
+      console.log('0 and 2 and 3');
+      return arrCopy.filter(
+        (e) => e.segments[0].stops.length == 0 || e.segments[0].stops.length == 2 || e.segments[0].stops.length == 3
+      );
+    }
+    if (!isNoChange && isOneChange && isTwoChange && isThreeChange) {
+      console.log('1 and 2 and 3');
+      return arrCopy.filter(
+        (e) => e.segments[0].stops.length == 1 || e.segments[0].stops.length == 2 || e.segments[0].stops.length == 3
+      );
+    }
+    if (!isNoChange && isOneChange && isTwoChange && !isThreeChange) {
+      console.log('1 and 2');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 1 || e.segments[0].stops.length == 2);
+    }
+    if (!isNoChange && isOneChange && !isTwoChange && isThreeChange) {
+      console.log('1 and 3');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 1 || e.segments[0].stops.length == 3);
+    }
+    if (!isNoChange && !isOneChange && isTwoChange && isThreeChange) {
+      console.log('2 and 3');
+      return arrCopy.filter((e) => e.segments[0].stops.length == 2 || e.segments[0].stops.length == 3);
+    }
+
+    console.log(newArr);
+    return newArr;
+  };
+  const filteredTickets = filterTicketsF(tickets);
+  const sortTickets = () => {
+    console.log('tab', filterToggle);
+    if (!filteredTickets) return;
+    let sorted = [...filteredTickets];
+    return sorted.sort((a, b) => (filterToggle ? a.price - b.price : a.segments[0].duration - b.segments[0].duration));
+    //let fltrd = ticketsData.filter((e) => e.price <= 20000);
+    //let fltrd = ticketsData.sort((a, b) => a.price - b.price);
+    //return fltrd;
+  };
+  const sortedTickets = sortTickets(filteredTickets);
   const element = () => {
-    if (tickets == null) return <div>nothing to render</div>;
+    if (!sortedTickets) return <div>nothing to render</div>;
     const calcTime = (minutes) => {
       return `${Math.floor(minutes / 60)}ч ${minutes % 60}м`;
     };
@@ -29,7 +128,7 @@ const Ticket = () => {
           return '';
       }
     };
-    return tickets.map((e, idx) => {
+    return sortedTickets.map((e, idx) => {
       const flightPath = `${e.segments[0].origin} - ${e.segments[0].destination}`;
       const backFlightPath = `${e.segments[1].origin} - ${e.segments[1].destination}`;
       const transitions = e.segments[0].stops.join(', ');
@@ -41,7 +140,7 @@ const Ticket = () => {
       const backFlightIntervalDate = flightIntervalStr(new Date(e.segments[1].date), e.segments[1].duration);
 
       return (
-        <li key={idx} className="app__ticket">
+        <li key={`${e.price}${e.segments[0].duration}`} className="app__ticket">
           <div className="app__ticket__price">
             <div className="app__ticket__elem-price">{price}</div>
             <div className="app__ticket__elem"></div>

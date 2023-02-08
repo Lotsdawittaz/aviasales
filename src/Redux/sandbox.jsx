@@ -1,15 +1,14 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { fetchSearchId, fetchTickets } from './dataHandler';
+import { fetchTickets } from './dataHandler';
 
 const Sandbox = () => {
   const { searchId, loading } = useSelector((state) => state.getSearchId);
   const dispatch = useDispatch();
-  useEffect(() => {
+  /*   useEffect(() => {
     dispatch(fetchSearchId());
   }, []);
-  if (loading) return <div>loading</div>;
+  if (loading) return <div>loading</div>; */
   return (
     <div>
       <button onClick={() => dispatch(fetchTickets())}>click</button>
