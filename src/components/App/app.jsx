@@ -7,23 +7,22 @@ import logoImg from '../../Assets/logo.svg';
 import Filter from '../Filter';
 import TabComponent from '../TabComponent';
 import Ticket from '../Ticket';
-import { Counter } from '../Counter/Counter';
-import Sandbox from '../../Redux/sandbox';
 import { fetchSearchId, fetchTickets } from '../../Redux/dataHandler';
 
 const App = () => {
-  const { searchId, loading } = useSelector((state) => state.getSearchId);
+  const { stop } = useSelector((state) => state.getTickets);
   const dispatch = useDispatch();
   useEffect(() => {
-    console.log('app effect');
-    dispatch(fetchSearchId());
+    async function getData() {
+      await dispatch(fetchSearchId());
+      dispatch(fetchTickets());
+    }
+    getData();
   }, []);
 
   return (
     <div className="layout">
-      <img className="posterImg" src={logoImg} alt="logo"></img>
-      {/* <Counter /> */}
-      {/* <Sandbox /> */}
+      <img className={stop ? 'posterImg' : 'posterImg animated'} src={logoImg} alt="logo"></img>
       <div className="app__container">
         <Filter />
         <div className="app__ticket__block">

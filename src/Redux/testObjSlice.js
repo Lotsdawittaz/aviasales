@@ -3,8 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 export const testTicketObj = createSlice({
   name: 'testTicketObj',
   initialState: {
-    sortedTickets: [],
-    filteredTickets: [],
     tickets: [
       {
         price: 92650,
@@ -449,15 +447,6 @@ export const testTicketObj = createSlice({
     ],
     stop: false,
   },
-  reducers: {
-    sortAscending: (state, action) => {
-      state.sortedTickets = action.payload;
-    },
-    filterTickets: (state, action) => {
-      state.filteredTickets = action.payload;
-    },
-  },
 });
 
-export const { sortAscending, filterTickets } = testTicketObj.actions;
 export default testTicketObj.reducer;

@@ -1,8 +1,7 @@
 import './filter.scss';
-import { useEffect } from 'react';
+
 import { useSelector, useDispatch } from 'react-redux';
 
-// import { filterTickets } from '../../Redux/testObjSlice';
 import { all, noChange, oneChange, twoChange, threeChange } from '../../Redux/changeFilterSlice';
 
 const Filter = () => {
@@ -11,10 +10,6 @@ const Filter = () => {
   const isOneChange = useSelector((state) => state.changeFilter.oneChange);
   const isTwoChange = useSelector((state) => state.changeFilter.twoChange);
   const isThreeChange = useSelector((state) => state.changeFilter.threeChange);
-
-  useEffect(() => {
-    console.log('filter effect');
-  }, []);
 
   const dispatch = useDispatch();
 
@@ -26,7 +21,7 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="all">
               <input
-                onClick={() => {
+                onChange={() => {
                   dispatch(all());
                 }}
                 type="checkbox"
@@ -41,7 +36,7 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="no-change">
               <input
-                onClick={() => {
+                onChange={() => {
                   dispatch(noChange());
                 }}
                 type="checkbox"
@@ -56,7 +51,7 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="one-change">
               <input
-                onClick={() => {
+                onChange={() => {
                   dispatch(oneChange());
                 }}
                 type="checkbox"
@@ -70,7 +65,7 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="two-change">
               <input
-                onClick={() => {
+                onChange={() => {
                   dispatch(twoChange());
                 }}
                 type="checkbox"
@@ -84,7 +79,7 @@ const Filter = () => {
           <div className="app__filter__checkboxContainer">
             <label htmlFor="three-change">
               <input
-                onClick={() => {
+                onChange={() => {
                   dispatch(threeChange());
                 }}
                 type="checkbox"

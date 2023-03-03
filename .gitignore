@@ -30,4 +30,4 @@ README.md
 .prettierrc.json
 .eslintrc.json
 .env
-changeFilterSlice copy.js
+.testObjSlice.js
